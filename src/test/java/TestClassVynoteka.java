@@ -1,7 +1,9 @@
+import org.checkerframework.checker.units.qual.A;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -20,19 +22,19 @@ import java.util.concurrent.TimeUnit;
 public class TestClassVynoteka {
     WebDriver _globalDriver;
     private WebDriver globalDriver;
-    //@BeforeTest
-    //public void SetupWebDriver() {
-    //    ChromeOptions options = new ChromeOptions();
-    //    options.addArguments("--start-maximized");
-    //    _globalDriver = new ChromeDriver(options);
-    //    _globalDriver.get("https://vynoteka.lt/");
-    //    _globalDriver.manage().window().maximize();
-    //}
-
-
     @BeforeTest
-    public  void WebDriverSetUp(){
-        _globalDriver = new ChromeDriver();}
+    public void SetupWebDriver() {
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--start-maximized");
+        _globalDriver = new ChromeDriver(options);
+        _globalDriver.get("https://vynoteka.lt/");
+        _globalDriver.manage().window().maximize();
+    }
+
+
+//    @BeforeTest
+//    public  void WebDriverSetUp(){
+//        _globalDriver = new ChromeDriver();}
 
     @Test
     public void TestVyno1(){
@@ -168,7 +170,7 @@ public class TestClassVynoteka {
 
     @Test
     public void TestVyno5(){
-        _globalDriver.get("https://vynoteka.lt/");
+        //_globalDriver.get("https://vynoteka.lt/");
 
         WebElement ageVerifi = _globalDriver.findElement(By.xpath("/html/body/div[2]/div[1]/div[2]/div/div/div/div/div[2]/div[3]/div/div[1]/button"));
         ageVerifi.click();
@@ -177,39 +179,70 @@ public class TestClassVynoteka {
 
         _globalDriver.findElement(By.id("CybotCookiebotDialogBodyLevelButtonLevelOptinAllowAll")).click();
         //drop menu
-        _globalDriver.findElement(By.xpath("/html/body/div[2]/div[1]/header/div[2]/div/div/div[1]/button")).click();
+        //_globalDriver.findElement(By.xpath("/html/body/div[2]/div[1]/header/div[2]/div/div/div[1]/button")).click();
 
-        //select from drop menu
-        _globalDriver.findElement(By.xpath("/html/body/div[2]/div[1]/header/div[3]/div/div/div[1]/div[1]/div[1]/div/nav/div[1]/div/button")).click();
+        //drop vynas
+        _globalDriver.findElement(By.xpath("/html/body/div[2]/div[1]/header/div[3]/div/div/div[1]/div/div[1]/div/nav/div[1]/div/button")).click();
 
         //select sub category
-        _globalDriver.findElement(By.xpath("/html/body/div[2]/div[1]/header/div[3]/div/div/div[2]/div[1]/div/nav/div[4]")).click();
+        _globalDriver.findElement(By.xpath("/html/body/div[2]/div[1]/header/div[3]/div/div/div[1]/div/div[1]/div/nav/div[1]/div/div/div/div/div[1]/div/div[1]/div/div[1]/div/nav/div[1]")).click();
 
         _globalDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
 
         _globalDriver.findElement(By.xpath("/html/body/div[1]/div[1]/main/section/div/div[2]/div/div[1]/div[4]/div[1]/div/div/div[2]/a")).click();
         // get item name and price
         String itemName = _globalDriver.findElement(By.xpath("/html/body/div[1]/div[1]/main/div[2]/section[1]/div/div/div/div/div/div[2]/div[1]/h3")).getText();
-        String itemPrice = _globalDriver.findElement(By.xpath("/html/body/div[1]/div[1]/main/div[2]/section[1]/div/div/div/div/div/div[2]/div[2]/div[1]/div/div[1]/div/div[1]/div/div")).getText();
+        String itemPrice = (_globalDriver.findElement(By.xpath("/html/body/div[1]/div[1]/main/div[2]/section[1]/div/div/div/div/div/div[2]/div[2]/div[1]/div/div[1]/div/div[1]/div/div/span[1]")).getText() +
+                "." + _globalDriver.findElement(By.xpath("/html/body/div[1]/div[1]/main/div[2]/section[1]/div/div/div/div/div/div[2]/div[2]/div[1]/div/div[1]/div/div[1]/div/div/span[2]")).getText() + " " +
+                _globalDriver.findElement(By.xpath("/html/body/div[1]/div[1]/main/div[2]/section[1]/div/div/div/div/div/div[2]/div[2]/div[1]/div/div[1]/div/div[1]/div/div/span[3]")).getText());
 
         _globalDriver.findElement(By.xpath("/html/body/div[1]/div[1]/main/div[2]/section[1]/div/div/div/div/div/div[2]/div[2]/div[2]/div[2]/button")).click();
 
         _globalDriver.findElement(By.xpath("/html/body/div[1]/div[1]/header/div[2]/div/div/div[4]/nav/div[1]/button")).click();
 
+        _globalDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+        //type user email
+        _globalDriver.findElement(By.xpath("/html/body/div[1]/div[5]/div/div/div/div[2]/div/div[2]/div/form/div[1]/div/input")).sendKeys("Belekoksbelekaitis@gmail.com");
+        //type user pwd
+        _globalDriver.findElement(By.xpath("/html/body/div[1]/div[5]/div/div/div/div[2]/div/div[2]/div/form/div[2]/div/input")).sendKeys("Belekaitis@23");
+
+        _globalDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
+        //press PRIIJUNGTI
+        _globalDriver.findElement(By.xpath("/html/body/div[1]/div[5]/div/div/div/div[2]/div/div[2]/div/form/div[4]/button")).click();
+
         _globalDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
 
-        _globalDriver.findElement(By.xpath("/html/body/div[1]/div[6]/div/div/div/div[2]/div/div[2]/div/form/div[1]/div/input")).sendKeys("Belekoksbelekaitis@gmail.com");
-
-        _globalDriver.findElement(By.xpath("/html/body/div[1]/div[6]/div/div/div/div[2]/div/div[2]/div/form/div[2]/div/input")).sendKeys("Belekaitis@23");
+        _globalDriver.findElement(By.xpath("/html/body/div[1]/div[5]/div/div/div/div[2]/div[1]/div[1]/button")).click();
 
         _globalDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(1));
 
-        _globalDriver.findElement(By.xpath("/html/body/div[1]/div[5]/div/div/div/div[2]/div/div[2]/div/form/div[4]/button")).click();
+        //_globalDriver.findElement(By.xpath("/html/body/div[1]/div[5]/div/div/div/div[2]/div[2]/div/form/div[1]/div/div[2]/div/div[1]/div/div/input")).sendKeys("Laisves pr. 1");
 
+//        _globalDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
+//
+        _globalDriver.findElement(By.xpath("/html/body/div[1]/div[5]/div/div/div/div[2]/div[2]/form/button")).click();
+//
+        _globalDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(1));
+        //pasirinkti laika
+        _globalDriver.findElement(By.xpath("/html/body/div[1]/div[5]/div/div/div/div[2]/div[2]/div/div/div[2]/div[4]/div[2]/label/span[2]")).click();
 
+        //globalDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(1));
+        //rezervuoti
+        _globalDriver.findElement(By.xpath("/html/body/div[1]/div[5]/div/div/div/div[2]/div[2]/button")).click();
+        //perziureti krepseli
+        _globalDriver.findElement(By.xpath("/html/body/div[1]/div[5]/div/div/div/div[2]/div[3]/div[1]/button")).click();
 
+        _globalDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
 
+        String itemInBasket = _globalDriver.findElement(By.xpath("/html/body/div[1]/div[1]/main/section/div/div[2]/div[1]/div[1]/div[2]/div[2]/div[2]/div/div[1]/div/div[2]/a")).getText();
+        String priceInBasket = _globalDriver.findElement(By.xpath("/html/body/div[1]/div[1]/main/section/div/div[2]/div[1]/div[1]/div[2]/div[2]/div[2]/div/div[3]/span")).getText();
+        System.out.println(itemName);
+        System.out.println(itemPrice);
+        System.out.println(itemInBasket);
+        System.out.println(priceInBasket);
 
+        Assert.assertEquals(itemName, itemInBasket);
+        Assert.assertEquals(itemPrice, priceInBasket);
 
     }
 
